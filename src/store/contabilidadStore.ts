@@ -3,15 +3,14 @@ import {
   Empresa,
   CuentaContable,
   AsientoContable,
-  MovimientoAsiento,
   FilaBalanza,
   CuentaMayorDetalle,
   EstadoResultados,
   BalanceGeneral,
-} from '../shared/types/contabilidad.types';
+} from '../types/contabilidad.types';
 import { initialEmpresa, initialCuentas, initialAsientos } from './initialData';
-import { localContabilidadStorage } from '../shared/storage/storage';
-import { Money } from '../shared/math/money';
+import { localContabilidadStorage } from '../services/storage/storage';
+import { Money } from '../lib/math/money';
 
 interface ContabilidadState {
   empresa: Empresa;
@@ -111,14 +110,14 @@ export const useContabilidadStore = create<ContabilidadState>((set, get) => ({
     if (!sumDebe.equals(sumHaber)) {
       return {
         success: false,
-        error: `Partida Doble Descuadrada: Debe (${sumDebe.toString()}) != Haber (${sumHaber.toString()}). Diferencia: ${sumDebe.sub(sumHaber).toString()}`,
+        error: `El asiento no está cuadrado. Debe: ${sumDebe.toString()}; Haber: ${sumHaber.toString()}; diferencia: ${sumDebe.sub(sumHaber).toString()}. Corrige los importes antes de guardarlo.`,
       };
     }
 
     if (sumDebe.isZero()) {
       return {
         success: false,
-        error: 'El importe total del asiento debe ser mayor a 0.00',
+        error: 'El importe total del asiento debe ser mayor que C$ 0.00.',
       };
     }
 
