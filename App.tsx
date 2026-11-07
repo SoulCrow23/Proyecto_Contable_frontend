@@ -9,17 +9,17 @@ import {
   StatusBar as NativeStatusBar,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { theme } from './src/shared/theme/theme';
-import { Header } from './src/shared/components/Header';
-import { TabBar, ModuloActivo } from './src/shared/components/TabBar';
+import { theme } from './src/components/ui/theme/theme';
+import { Header } from './src/components/ui/Header';
+import { TabBar, ModuloActivo } from './src/components/ui/TabBar';
 import { useContabilidadStore } from './src/store/contabilidadStore';
 
 // Módulos
-import { EmpresaScreen } from './src/modules/empresa/screens/EmpresaScreen';
-import { CatalogoScreen } from './src/modules/catalogo/screens/CatalogoScreen';
-import { LibroDiarioScreen } from './src/modules/asientos/screens/LibroDiarioScreen';
-import { LibroMayorScreen } from './src/modules/mayor/screens/LibroMayorScreen';
-import { ReportesScreen } from './src/modules/reportes/screens/ReportesScreen';
+import { EmpresaScreen } from './src/features/empresa';
+import { CatalogoScreen } from './src/features/catalogo';
+import { LibroDiarioScreen } from './src/features/asientos';
+import { LibroMayorScreen } from './src/features/mayor';
+import { ReportesScreen } from './src/features/reportes';
 
 export default function App() {
   const [moduloActivo, setModuloActivo] = useState<ModuloActivo>('asientos');

@@ -1,4 +1,4 @@
-import { CuentaContable, Empresa, AsientoContable } from '../shared/types/contabilidad.types';
+import { CuentaContable, Empresa, AsientoContable } from '../types/contabilidad.types';
 
 export const initialEmpresa: Empresa = {
   nombre: 'Corporación Multiservicios Global, S.A.',
