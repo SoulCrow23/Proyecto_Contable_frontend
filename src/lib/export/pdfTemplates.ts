@@ -13,6 +13,10 @@ import { Money } from '../math/money';
  * Estilos base CSS para los documentos contables en formato PDF.
  */
 const BASE_CSS = `
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
   * {
     box-sizing: border-box;
     margin: 0;
@@ -22,7 +26,7 @@ const BASE_CSS = `
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
     color: #1e293b;
     background-color: #ffffff;
-    padding: 28px;
+    padding: 0;
     font-size: 11pt;
     line-height: 1.4;
   }
@@ -473,7 +477,14 @@ export function generarHtmlBalanza(
     <head>
       <meta charset="UTF-8">
       <title>Balanza de Comprobación - ${empresa.nombre}</title>
-      <style>${BASE_CSS}</style>
+      <style>
+        ${BASE_CSS}
+        @page { size: A4 landscape; margin: 10mm; }
+        body { font-size: 9pt; }
+        table { font-size: 8.5pt; }
+        th { font-size: 8pt; padding: 5px 6px; }
+        td { padding: 4px 6px; }
+      </style>
     </head>
     <body>
       ${buildHeader(empresa, 'Balanza de Comprobación', empresa.periodoContable)}
