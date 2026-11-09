@@ -6,9 +6,14 @@ import {
 } from '../../types/contabilidad.types';
 import { formatDate } from '../../utils/formatters/currency';
 
+// Excel configurado para español utiliza punto y coma como delimitador de listas.
+// La primera línea `sep=;` fuerza el reconocimiento, incluso si el equipo usa
+// una configuración regional distinta.
+const DELIMITADOR_CSV = ';';
+
 function escapeCsv(value: string | number): string {
   const str = String(value ?? '');
-  if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+  if (str.includes(DELIMITADOR_CSV) || str.includes('"') || str.includes('\n')) {
     return `"${str.replace(/"/g, '""')}"`;
   }
   return str;
@@ -46,7 +51,7 @@ export function generarCsvBalanza(
       'Movimiento Haber',
       'Saldo Deudor',
       'Saldo Acreedor',
-    ].join(',')
+    ].join(DELIMITADOR_CSV)
   );
 
   // Filas de detalle
@@ -61,7 +66,7 @@ export function generarCsvBalanza(
         escapeCsv(f.movimientoHaber),
         escapeCsv(f.saldoDeudor),
         escapeCsv(f.saldoAcreedor),
-      ].join(',')
+      ].join(DELIMITADOR_CSV)
     );
   });
 
@@ -76,10 +81,10 @@ export function generarCsvBalanza(
       escapeCsv(balanza.totalMovHaber),
       escapeCsv(balanza.totalSaldoDeudor),
       escapeCsv(balanza.totalSaldoAcreedor),
-    ].join(',')
+    ].join(DELIMITADOR_CSV)
   );
 
-  return '\uFEFF' + lineas.join('\r\n');
+  return `\uFEFFsep=${DELIMITADOR_CSV}\r\n${lineas.join('\r\n')}`;
 }
 
 /**
@@ -106,7 +111,7 @@ export function generarCsvLibroDiario(
       'Debe',
       'Haber',
       'Referencia',
-    ].join(',')
+    ].join(DELIMITADOR_CSV)
   );
 
   asientos.forEach((asiento) => {
@@ -121,12 +126,12 @@ export function generarCsvLibroDiario(
           escapeCsv(mov.debe),
           escapeCsv(mov.haber),
           escapeCsv(mov.referencia || ''),
-        ].join(',')
+        ].join(DELIMITADOR_CSV)
       );
     });
   });
 
-  return '\uFEFF' + lineas.join('\r\n');
+  return `\uFEFFsep=${DELIMITADOR_CSV}\r\n${lineas.join('\r\n')}`;
 }
 
 /**
@@ -137,7 +142,9 @@ export function generarCsvCatalogo(cuentas: CuentaContable[]): string {
   lineas.push('CATALOGO DE CUENTAS');
   lineas.push('');
   lineas.push(
-    ['Codigo', 'Nombre de Cuenta', 'Clasificacion', 'Naturaleza', 'Descripcion'].join(',')
+    ['Codigo', 'Nombre de Cuenta', 'Clasificacion', 'Naturaleza', 'Descripcion'].join(
+      DELIMITADOR_CSV
+    )
   );
 
   cuentas.forEach((c) => {
@@ -148,9 +155,9 @@ export function generarCsvCatalogo(cuentas: CuentaContable[]): string {
         escapeCsv(c.clasificacion),
         escapeCsv(c.naturaleza),
         escapeCsv(c.descripcion || ''),
-      ].join(',')
+      ].join(DELIMITADOR_CSV)
     );
   });
 
-  return '\uFEFF' + lineas.join('\r\n');
+  return `\uFEFFsep=${DELIMITADOR_CSV}\r\n${lineas.join('\r\n')}`;
 }

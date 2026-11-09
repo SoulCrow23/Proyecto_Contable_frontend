@@ -1,0 +1,28 @@
+schema: spec-driven
+
+context: |
+  El proyecto es un frontend Expo/React Native con TypeScript y una arquitectura de monolito modular.
+  Todos los artefactos de OpenSpec se redactan en español.
+  Los cambios contables deben cumplir la skill local sistema-contable-modular: partida doble,
+  cálculo monetario con decimal.js, ecuación contable, persistencia offline-first y compatibilidad
+  futura con backend .NET. Las rutas permanecen en src/app y el código no relacionado con rutas
+  permanece fuera de ese directorio.
+
+rules:
+  proposal:
+    - Indicar alcance, exclusiones e impacto sobre reglas contables cuando corresponda.
+    - No proponer cambios de código antes de que el usuario apruebe los artefactos.
+  design:
+    - Mantener patrones mobile-first y compatibilidad web, Android e iOS.
+    - Documentar cualquier decisión que afecte tema claro/oscuro, responsive o exportaciones.
+  tasks:
+    - Cada tarea debe indicar cómo se verificará antes de marcarse como completada.
+
+operations:
+  apply:
+    guidance:
+      - Consultar la skill sistema-contable-modular antes de cambios que afecten dominio contable.
+      - Ejecutar typecheck, lint y las validaciones de Expo definidas por el proyecto.
+  archive:
+    guidance:
+      - Confirmar que los criterios de aceptación y las validaciones de la propuesta están documentados.
